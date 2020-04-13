@@ -33,6 +33,7 @@
   ],
   "devDependencies": {
     "@types/mocha": "^7.0.2",
+    "@types/node": "^10.17.19",
     "mocha": "^7.1.1",
     "typescript": "^3.8.3"
   }
