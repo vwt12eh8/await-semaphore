@@ -1,4 +1,7 @@
 # await-semaphore
+
+![Node.js CI](https://github.com/vwt12eh8/await-semaphore/workflows/Node.js%20CI/badge.svg)
+
 Awaitable semaphore/mutex
 
 A semaphore implementation using ES6 promises and supporting 3 styles:
