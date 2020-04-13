@@ -1,12 +1,8 @@
 {
 	"compilerOptions": {
-		"target": "es6",
-		"module": "commonjs",
+		"target": "es2018",
+        "module": "commonjs",
+        "removeComments": true,
 		"sourceMap": true
-	},
-    "exclude": [
-        "node_modules",
-        "typings/browser",
-        "typings/browser.d.ts"
-    ]
+	}
 }
