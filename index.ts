@@ -1,6 +1,8 @@
+// tslint:disable: max-classes-per-file
+
 export class Semaphore {
-    private tasks: (() => void)[] = [];
-    count: number;
+    private readonly tasks = new Array<() => void>();
+    public count: number;
 
     constructor(count: number) {
         this.count = count;
@@ -9,9 +11,9 @@ export class Semaphore {
     private sched() {
         if (this.count > 0 && this.tasks.length > 0) {
             this.count--;
-            let next = this.tasks.shift();
+            const next = this.tasks.shift();
             if (next === undefined) {
-                throw "Unexpected undefined value in tasks list";
+                throw new Error("Unexpected undefined value in tasks list");
             }
 
             next();
@@ -20,8 +22,8 @@ export class Semaphore {
 
     public acquire() {
         return new Promise<() => void>((res, rej) => {
-            var task = () => {
-                var released = false;
+            const task = () => {
+                let released = false;
                 res(() => {
                     if (!released) {
                         released = true;
@@ -31,27 +33,21 @@ export class Semaphore {
                 });
             };
             this.tasks.push(task);
-            if (process && process.nextTick) {
-                process.nextTick(this.sched.bind(this));
-            } else {
-                setImmediate(this.sched.bind(this));
-            }
+            (process?.nextTick || setImmediate)(this.sched.bind(this));
         });
     }
 
-    public use<T>(f: () => Promise<T>) {
-        return this.acquire()
-        .then(release => {
-            return f()
-            .then((res) => {
-                release();
-                return res;
-            })
-            .catch((err) => {
-                release();
-                throw err;
-            });
-        });
+    public async use<T>(f: () => Promise<T>) {
+        const release = await this.acquire();
+        try {
+            const res = await f();
+            release();
+            return res;
+        }
+        catch (err) {
+            release();
+            throw err;
+        }
     }
 }
 
