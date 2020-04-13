@@ -20,9 +20,16 @@ export class Semaphore {
         }
     }
 
-    public acquire() {
+    public acquire(cancel?: Cancel) {
+        cancel?.throwIfCancelled();
         return new Promise<() => void>((res, rej) => {
             const task = () => {
+                if (cancel?.isCancelled) {
+                    this.count++;
+                    this.sched();
+                    return;
+                }
+                cancel?.off(rej);
                 let released = false;
                 res(() => {
                     if (!released) {
@@ -33,20 +40,17 @@ export class Semaphore {
                 });
             };
             this.tasks.push(task);
+            cancel?.once(rej);
             (process?.nextTick || setImmediate)(this.sched.bind(this));
         });
     }
 
-    public async use<T>(f: () => Promise<T>) {
-        const release = await this.acquire();
+    public async use<T = void>(f: () => Promise<T>, cancel?: Cancel) {
+        const release = await this.acquire(cancel);
         try {
-            const res = await f();
+            return await f();
+        } finally {
             release();
-            return res;
-        }
-        catch (err) {
-            release();
-            throw err;
         }
     }
 }
@@ -55,4 +59,11 @@ export class Mutex extends Semaphore {
     constructor() {
         super(1);
     }
+}
+
+interface Cancel {
+    readonly isCancelled: boolean;
+    off(listener: (error?: unknown) => void): void;
+    once(listener: (error?: unknown) => void): void;
+    throwIfCancelled(): void;
 }
