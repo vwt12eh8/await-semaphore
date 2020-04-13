@@ -1,16 +1,14 @@
 {
-  "name": "await-semaphore",
-  "version": "0.1.3",
+  "name": "@vwt12eh8/await-semaphore",
+  "version": "1.0.0",
   "description": "Awaitable semaphore/mutex",
   "main": "index.js",
   "scripts": {
-    "prebuild": "typings install",
-    "build": "tsc",
     "test": "mocha test.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/notenoughneon/await-semaphore.git"
+    "url": "https://github.com/vwt12eh8/await-semaphore.git"
   },
   "keywords": [
     "promise",
@@ -18,15 +16,24 @@
     "mutex",
     "typescript"
   ],
-  "author": "Emma Kuo",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/notenoughneon/await-semaphore/issues"
+    "url": "https://github.com/vwt12eh8/await-semaphore/issues"
   },
-  "homepage": "https://github.com/notenoughneon/await-semaphore#readme",
+  "homepage": "https://github.com/vwt12eh8/await-semaphore#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=10.20"
+  },
+  "files": [
+    "index.d.ts",
+    "index.js"
+  ],
   "devDependencies": {
-    "mocha": "^2.5.3",
-    "typescript": "^1.8.10",
-    "typings": "^1.3.1"
+    "@types/mocha": "^7.0.2",
+    "mocha": "^7.1.1",
+    "typescript": "^3.8.3"
   }
 }

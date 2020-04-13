@@ -1,3 +1,6 @@
+*.js
+*.map
+
 # Logs
 logs
 *.log
