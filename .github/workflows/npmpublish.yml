@@ -5,7 +5,7 @@ name: Node.js Package
 
 on:
   release:
-    types: [published]
+    types: [ published ]
 
 jobs:
   publish-npm:
@@ -17,6 +17,8 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
       - run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
       - run: npx tsc
       - run: npm publish
         env:

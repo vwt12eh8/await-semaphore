@@ -2,10 +2,7 @@
   "name": "@vwt12eh8/await-semaphore",
   "version": "1.0.0",
   "description": "Awaitable semaphore/mutex",
-  "main": "index.js",
-  "scripts": {
-    "test": "mocha test.js"
-  },
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/vwt12eh8/await-semaphore.git"
@@ -16,11 +13,6 @@
     "mutex",
     "typescript"
   ],
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/vwt12eh8/await-semaphore/issues"
-  },
-  "homepage": "https://github.com/vwt12eh8/await-semaphore#readme",
   "publishConfig": {
     "access": "public"
   },
@@ -31,10 +23,15 @@
     "index.d.ts",
     "index.js"
   ],
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test.js"
+  },
   "devDependencies": {
     "@types/mocha": "^7.0.2",
     "@types/node": "^10.17.19",
     "mocha": "^7.1.1",
+    "tslint": "^6.1.1",
     "typescript": "^3.8.3"
   }
 }
