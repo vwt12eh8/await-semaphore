@@ -46,7 +46,7 @@ describe('util', () => {
             let running = 0;
             let ran = 0;
             let erred = 0;
-            const task = (i) => async () => {
+            const task = (i: number) => async () => {
                 assert(running <= 1);
                 running++;
                 await delay(10);
@@ -118,7 +118,7 @@ describe('util', () => {
                 .then(done);
         });
         it('double release ok', (done) => {
-            let release;
+            let release: () => void;
             const m = new Mutex();
             m.acquire().
                 then(r => release = r).
